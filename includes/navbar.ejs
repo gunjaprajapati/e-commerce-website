@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raj International Navbar</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <style>
+        /* Custom Styles */
+        .navbar-dark .navbar-nav .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 500;
+        }
+
+        .navbar-dark .navbar-nav .nav-link:hover {
+            color: white;
+        }
+
+        .navbar-dark .navbar-brand {
+            color: white;
+            font-weight: 600;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .navbar-dark {
+            background-color: #00203F !important; /* Adjusted navbar color */
+            padding: 5px 0;
+        }
+
+        .navbar-dark.navbar-expand-lg {
+            height: 90px;
+        }
+
+        .combined-search {
+            display: flex;
+            width: 50%;
+            margin: 10px auto 0;
+            border: 2px solid #ffc107;
+        }
+
+        .category-dropdown {
+            position: relative; /* Make it a positioned container */
+        }
+
+        .category-dropdown .dropdown-toggle {
+            background-color: white;
+            color: black;
+            border: none;
+            padding: 10px 15px;
+        }
+
+        .search-container {
+            position: relative;
+            flex-grow: 1;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 35px 10px 15px;
+            height: 42px;
+            background-color: white;
+            color: black;
+            border: none;
+        }
+
+        .search-icon {
+        position: absolute;
+        top: 0; /* Align to the top */
+        right: 0; /* Align to the right */
+        transform: none; /* Remove transform */
+        color: black;
+        font-size: 1.2em; /* Adjust as needed */
+        background-color: #ffc107; /* Yellow background */
+        padding: 10px 10px 10px 15px; /* Adjust padding to fit */
+        border-radius: 0 4px 4px 0; /* Round corners on the left */
+        height: 100%; /* Make icon fill the height */
+        display: flex; /* Use flexbox for vertical alignment */
+        align-items: center; /* Center vertically */
+    }
+
+        .dropdown-menu {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            width: 250px; /* Adjust width as needed */
+            left: 0; /* Align with the left edge of category-dropdown */
+            padding: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .dropdown-item {
+            color: #212529;
+            font-weight: 400;
+            padding: 8px 15px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .dropdown-item:hover {
+            background-color: #e9ecef;
+        }
+
+        .dropdown-item + .dropdown-item {
+            margin-top: 5px;
+        }
+
+        .navbar-nav .nav-link {
+            font-size: 0.9rem;
+        }
+
+        .navbar-brand {
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark py-3">
+        <div class="container">
+            <a class="navbar-brand" href="#">Raj International</a>
+            <div class="combined-search">
+                <div class="category-dropdown">
+                    <a class="nav-link dropdown-toggle" href="/category_user" id="all-categories-dropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        All Categories
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="all-categories-dropdown">
+                        <a class="dropdown-item" href="#">Adhesives & Sealants</a>
+                        <a class="dropdown-item" href="#">Adhesive Tapes</a>
+                        <a class="dropdown-item" href="#">Duct Tapes</a>
+                        <a class="dropdown-item" href="#">Adhesives & Glues</a>
+                        <a class="dropdown-item" href="#">Adhesives</a>
+                    </div>
+                </div>
+                <form action="/allcategory/search-category" method="GET" class="search-container">
+                    <input type="text" class="search-input" name="q" placeholder="Search for products..." required>
+                    <button type="submit" class="search-icon">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+            </div>
+            <ul class="navbar-nav ml-auto">
+                <% if(!curUser) { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login/login_form">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/signup/signup_form">Sign Up</a>
+                    </li>
+                    <% } %>
+                    <% if(curUser) { %>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/">Home</a>
+                        </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout/logout_page">Log Out</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/account/My_account">My Account</a>
+                    </li>
+                   <li class="nav-item">
+                    <a class="nav-link" href="/products/${productId}/cart/view_cart"><i class="fas fa-shopping-cart"></i> </a>
+                 </li>
+                <% } %>
+            </ul>
+        </div>
+    </nav>
+
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="departments-dropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        ☰ All Departments
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="departments-dropdown">
+                        <% categories.slice(0, 5).forEach(category => { %>
+                            <a class="dropdown-item" href="/category_user/<%= encodeURIComponent(category.name) %>">
+                                <%= category.name %>
+                            </a>
+                        <% }); %>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/category_user">All Categories</a>
+                    </div>
+                    
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#"></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

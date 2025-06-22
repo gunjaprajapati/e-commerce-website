@@ -1,0 +1,81 @@
+<% layout("../layout/boilerplate.ejs") %>
+
+<div class="container my-4">
+    <h1 class="text-center">All Categories</h1>
+
+    <div class="row g-4">
+        <% categories.forEach(category => { %>
+            <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12">
+                <a href="/category_user/<%= encodeURIComponent(category.name) %>">
+                    
+                    <div class="card h-100 text-center">
+                        <div class="card-body">
+                            <div class="category-icon">
+                                <i class="fas fa-<%= category.icon || 'box' %>"></i>
+
+                            </div>
+                            <h5 class="card-title"><%= category.name %></h5>
+                            <p class="items-text"><%= category.itemCount %> items</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        <% }); %>
+    </div>
+</div>
+
+<style>
+body {
+    background-color: #f8f8f8;
+    font-family: 'Arial', sans-serif;
+}
+
+.container {
+    max-width: 95%;
+}
+
+.category-card {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.card {
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    text-align: center;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.category-icon {
+    font-size: 2.5rem;
+    color: #777;
+    margin-bottom: 10px;
+}
+
+.card-title {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.items-text {
+    font-size: 0.9rem;
+    color: #555;
+}
+</style>

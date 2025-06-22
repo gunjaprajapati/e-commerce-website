@@ -1,0 +1,117 @@
+<% layout("../layout/boilerplate.ejs") %>
+
+<div class="container mt-5">
+    <div class="row">
+        <!-- Address Section -->
+        <div class="col-md-8">
+            <h2 class="fw-bold mb-4 text-primary">Select Delivery Address</h2>
+
+            <% if (addresses && addresses.length > 0) { %>
+                <h5 class="text-muted">DEFAULT ADDRESS</h5>
+                <% addresses.forEach(address => { %>
+                    <div class="card mb-3 address-card p-3">
+                        <div class="card-body">
+                            <h5 class="fw-bold"><%= address.name %> 
+                                <span class="badge bg-success ms-2"><%= address.addressType %></span>
+                            </h5>
+                            <p class="text-muted"><%= address.address %>, <%= address.locality %>, <%= address.city %>, <%= address.state %> - <%= address.pinCode %></p>
+                            <p>📞 Mobile: <strong><%= address.mobile %></strong></p>
+                            <p class="text-success fw-semibold">✔ Pay on Delivery available</p>
+                            
+                            <div class="d-flex justify-content-start mt-3">
+                                <!-- REMOVE Button -->
+                                <form action="/address/<%= address._id %>?_method=DELETE" method="POST">
+                                    <button type="submit" class="btn btn-outline-danger btn-sm me-2">❌ REMOVE</button>
+                                </form>
+                            
+                                <!-- EDIT Button -->
+                                <form action="/address/<%= address._id %>/edit" method="GET">
+                                    <button type="submit" class="btn btn-outline-primary btn-sm">✏ EDIT</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                <% }); %>
+            <% } else { %>
+                <p>No addresses found. <a href="/address/show" class="text-decoration-underline text-primary">Add a new address</a></p>
+            <% } %>
+
+            <a href="/address/add-new" class="btn btn-dark mt-3">➕ Add New Address</a>
+        </div>
+
+        <!-- Price Details Section -->
+        <div class="col-md-4">
+            <div class="price-details-section p-4 rounded shadow-lg">
+                <h5 class="fw-bold text-dark">PRICE DETAILS (<%= cart.length %> Item<%= cart.length > 1 ? 's' : '' %>)</h5>
+                <div class="mt-3">
+                    <p>Total MRP: <strong>₹<%= totalMRP.toFixed(2) %></strong></p>
+                    <p>Discount on MRP: <span class="text-danger">-₹<%= discount.toFixed(2) %></span> </p>
+                    <p>Platform Fee: <strong>₹<%= platformFee.toFixed(2) %></strong></p>
+                    <p>Shipping Fee: <span class="text-success fw-bold">FREE</span> </p>
+                    <p class="text-success">🎉 Free shipping for you</p>
+                </div>
+                <hr>
+                <h4>Total Amount: <strong class="text-dark">₹<%= subtotal.toFixed(2) %></strong></h4>
+                <a href="/cart/:id/payment/show" class="btn btn-warning w-100 fw-bold shadow-sm">🛒 CONTINUE</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Custom CSS for better styling -->
+<style>
+    .address-card {
+        border: none;
+        border-radius: 12px;
+        background-color: #f8f9fa;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .address-card:hover {
+        transform: scale(1.02);
+    }
+
+    .price-details-section {
+        border-radius: 12px;
+        background-color: white;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-outline-danger, .btn-outline-primary {
+        font-size: 13px;
+        font-weight: bold;
+        padding: 6px 12px;
+        border-radius: 6px;
+    }
+
+    .btn-outline-danger:hover {
+        background-color: #ff3f6c;
+        color: white;
+    }
+
+    .btn-outline-primary:hover {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .btn-dark {
+        font-size: 14px;
+        border-radius: 6px;
+        padding: 8px 14px;
+    }
+
+    .btn-dark:hover {
+        background-color: #333;
+    }
+
+    .btn-warning {
+        font-size: 16px;
+        border-radius: 6px;
+        padding: 10px;
+    }
+
+    .btn-warning:hover {
+        background-color: #e6a800;
+    }
+</style>

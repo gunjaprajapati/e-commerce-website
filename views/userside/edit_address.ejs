@@ -1,0 +1,104 @@
+<% layout("../layout/boilerplate.ejs") %>
+
+<div class="container mt-5">
+    <h2 class="mb-4 text-center text-primary">Edit Address</h2>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg rounded-4 border-0">
+                <div class="card-body p-4">
+                    <h3 class="card-title mb-3 text-center text-dark fw-bold">Contact Details & Address</h3>
+                    
+                    <form action="/address/<%= address._id %>?_method=PUT" method="POST">
+                        <!-- Name Field -->
+                        <div class="mb-3">
+                            <label for="name" class="form-label fw-semibold">Name:</label>
+                            <input type="text" id="name" name="name" class="form-control border-2 rounded-3" value="<%= address.name %>" required>
+                        </div>
+
+                        <!-- Mobile Field -->
+                        <div class="mb-3">
+                            <label for="mobile" class="form-label fw-semibold">Mobile:</label>
+                            <input type="text" id="mobile" name="mobile" class="form-control border-2 rounded-3" value="<%= address.mobile %>" required>
+                        </div>
+
+                        <!-- Address Section -->
+                        <h4 class="mb-3 text-primary">Address</h4>
+
+                        <div class="mb-3">
+                            <label for="pinCode" class="form-label fw-semibold">PIN Code:</label>
+                            <input type="text" id="pinCode" name="pinCode" class="form-control border-2 rounded-3" value="<%= address.pinCode %>" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="address" class="form-label fw-semibold">Address:</label>
+                            <textarea id="address" name="address" class="form-control border-2 rounded-3" required><%= address.address %></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="locality" class="form-label fw-semibold">Locality/Town:</label>
+                            <input type="text" id="locality" name="locality" class="form-control border-2 rounded-3" value="<%= address.locality %>" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="city" class="form-label fw-semibold">City/District:</label>
+                            <input type="text" id="city" name="city" class="form-control border-2 rounded-3" value="<%= address.city %>" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="state" class="form-label fw-semibold">State:</label>
+                            <input type="text" id="state" name="state" class="form-control border-2 rounded-3" value="<%= address.state %>" required>
+                        </div>
+
+                        <!-- Address Type -->
+                        <h4 class="mb-3 text-primary">Address Type</h4>
+                        <div class="mb-3">
+                            <div class="form-check form-check-inline">
+                                <input type="radio" id="home" name="addressType" value="Home" class="form-check-input" 
+                                <%= address.addressType === 'Home' ? 'checked' : '' %> required>
+                                <label for="home" class="form-check-label fw-semibold">Home</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input type="radio" id="office" name="addressType" value="Office" class="form-check-input"
+                                <%= address.addressType === 'Office' ? 'checked' : '' %> required>
+                                <label for="office" class="form-check-label fw-semibold">Office</label>
+                            </div>
+                        </div>
+
+                        <!-- Buttons -->
+                        <div class="d-flex justify-content-between mt-4">
+                            <button type="submit" class="btn btn-warning px-4 py-2 fw-bold shadow-sm">Save Address</button>
+                            <a href="/address/next-page" class="btn btn-secondary px-4 py-2 fw-bold shadow-sm">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Custom CSS for better styling -->
+<style>
+    .form-control {
+        transition: all 0.3s ease-in-out;
+    }
+
+    .form-control:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+
+    .btn {
+        border-radius: 8px;
+    }
+
+    .btn-warning:hover {
+        background-color: #e6a800;
+        transform: scale(1.05);
+    }
+
+    .btn-secondary:hover {
+        background-color: #5a6268;
+        transform: scale(1.05);
+    }
+</style>

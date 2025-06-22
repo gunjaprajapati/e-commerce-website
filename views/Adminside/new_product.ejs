@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Create Product</title>
+
+  <!-- Bootstrap CSS CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .form-container {
+      max-width: 900px;
+      margin: auto;
+      margin-top: 40px;
+      padding: 30px;
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+    .form-label {
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container form-container">
+    <h2 class="text-center mb-4 text-primary">🛍️ Create New Product</h2>
+
+    <form action="/products" method="POST">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label for="name" class="form-label">Product Name</label>
+          <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+        <div class="col-md-6">
+          <label for="price" class="form-label">Price</label>
+          <input type="number" class="form-control" id="price" name="price" step="0.01" required>
+        </div>
+        <div class="col-md-6">
+          <label for="stock" class="form-label">Stock</label>
+          <input type="number" class="form-control" id="stock" name="stock" required>
+        </div>
+        <div class="col-md-6">
+          <label for="sku" class="form-label">SKU</label>
+          <input type="text" class="form-control" id="sku" name="sku" required>
+        </div>
+        <div class="col-md-6">
+          <label for="brand" class="form-label">Brand</label>
+          <input type="text" class="form-control" id="brand" name="brand">
+        </div>
+        <div class="col-md-6">
+          <label for="imageUrl" class="form-label">Image URL</label>
+          <input type="url" class="form-control" id="imageUrl" name="imageUrl">
+        </div>
+        <div class="col-md-6">
+          <label for="categories" class="form-label">Categories</label>
+          <input type="text" class="form-control" id="categories" name="categories" placeholder="Comma separated">
+        </div>
+        <div class="col-md-6">
+          <label for="tags" class="form-label">Tags</label>
+          <input type="text" class="form-control" id="tags" name="tags" placeholder="Comma separated">
+        </div>
+        <div class="col-12">
+          <label for="description" class="form-label">Description</label>
+          <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+        </div>
+
+        <!-- Attributes Section -->
+        <div class="col-12">
+          <h5 class="mt-4">Attributes</h5>
+          <div class="row g-3">
+            <% const attributes = ["Color", "LinerMaterial", "Material", "OverallLength", "Series", "Size", "Thickness"]; %>
+            <% attributes.forEach(attr => { %>
+              <div class="col-md-6">
+                <label class="form-label"><%= attr %></label>
+                <input type="text" class="form-control" name="attributes[<%= attr %>]" placeholder="Enter <%= attr %>">
+              </div>
+            <% }) %>
+          </div>
+        </div>
+
+        <!-- Specifications Section -->
+        <div class="col-12">
+          <h5 class="mt-4">Specifications</h5>
+          <div class="row g-3">
+            <% const specs = ["ECLASSCode", "EN388Abrasion", "EN388Cut", "EN388Puncture", "EN388Tear", "StandardsMet", "UNSPSCCode", "MFRPartNo"]; %>
+            <% specs.forEach(spec => { %>
+              <div class="col-md-6">
+                <label class="form-label"><%= spec %></label>
+                <input type="text" class="form-control" name="specifications[<%= spec %>]" placeholder="Enter <%= spec %>">
+              </div>
+            <% }) %>
+          </div>
+        </div>
+
+        <div class="col-12 mt-4">
+          <button type="submit" class="btn btn-success w-100">Create Product</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

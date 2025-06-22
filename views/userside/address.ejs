@@ -1,0 +1,106 @@
+<% layout("../layout/boilerplate.ejs") %>
+
+<div class="container mt-5">
+    <h2 class="mb-4 text-primary">Checkout</h2>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card shadow-lg p-4">
+                <div class="card-body">
+                    <h3 class="card-title mb-3 text-dark">Contact Details & Address</h3>
+                    <form action="/address/add" method="POST">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name:</label>
+                            <input type="text" id="name" name="name" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="mobile" class="form-label">Mobile:</label>
+                            <input type="text" id="mobile" name="mobile" class="form-control" required>
+                        </div>
+                        <h4 class="mb-3 text-dark">Address</h4>
+                        <div class="mb-3">
+                            <label for="pinCode" class="form-label">PIN Code:</label>
+                            <input type="text" id="pinCode" name="pinCode" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Address:</label>
+                            <textarea id="address" name="address" class="form-control" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="locality" class="form-label">Locality/Town:</label>
+                            <input type="text" id="locality" name="locality" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="city" class="form-label">City/District:</label>
+                            <input type="text" id="city" name="city" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="state" class="form-label">State:</label>
+                            <input type="text" id="state" name="state" class="form-control" required>
+                        </div>
+                        <h4 class="mb-3 text-dark">Address Type</h4>
+                        <div class="mb-3">
+                            <div class="form-check form-check-inline">
+                                <input type="radio" id="home" name="addressType" value="Home" class="form-check-input" required>
+                                <label for="home" class="form-check-label">Home</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input type="radio" id="office" name="addressType" value="Office" class="form-check-input" required>
+                                <label for="office" class="form-check-label">Office</label>
+                            </div>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" id="isDefault" name="isDefault" value="true" class="form-check-input">
+                            <label for="isDefault" class="form-check-label">Make this my default address</label>
+                        </div>
+                        <button type="button" class="btn btn-secondary me-2">Cancel</button>
+                        <button type="submit" class="btn btn-warning">Save and Checkout</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-lg p-4">
+                <div class="card-body">
+                    <h4 class="card-title text-dark">Cart Totals</h4>
+                    <div class="d-flex justify-content-between">
+                        <span>Subtotal:</span>
+                        <span class="fw-bold">₹<%= subtotal.toFixed(2) %></span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span>Total MRP:</span>
+                        <span class="fw-bold">₹<%= totalMRP.toFixed(2) %></span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span>Shipping:</span>
+                        <span class="text-success fw-bold">FREE</span>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between">
+                        <span class="fw-bold text-dark">Total:</span>
+                        <span class="fw-bold text-primary">₹<%= subtotal.toFixed(2) %></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        border-radius: 12px;
+        background-color: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-warning {
+        font-size: 16px;
+        padding: 10px 15px;
+        border-radius: 6px;
+    }
+
+    .btn-warning:hover {
+        background-color: #e6a800;
+    }
+</style>

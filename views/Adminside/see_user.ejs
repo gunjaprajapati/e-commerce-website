@@ -1,0 +1,116 @@
+
+<body>
+  <div class="container">
+      <h3 class="title">Registered Users</h3>
+      <div class="table-container">
+          <table class="styled-table">
+              <thead>
+                  <tr>
+                      <th>Username</th>
+                      <th>Email</th>
+                      <th>Action</th> <!-- Added Action column -->
+                  </tr>
+              </thead>
+              <tbody>
+                  <% users.forEach(user => { %>
+                      <tr>
+                          <td><%= user.username %></td>
+                          <td><%= user.email %></td>
+                          <td>
+                              <!-- Delete button with user ID -->
+                              <form action="/user/<%= user._id %>?_method=DELETE" method="POST" style="display:inline;">
+                                  <button type="submit" class="delete-button">Delete</button>
+                              </form>
+                          </td>
+                      </tr>
+                  <% }) %>
+              </tbody>
+          </table>
+      </div>
+  </div>
+</body>
+
+<style>
+  /* Centered container */
+  .container {
+      max-width: 900px;
+      margin: 50px auto;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      text-align: center;
+  }
+
+  /* Table Header */
+  .title {
+      font-size: 26px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+  }
+
+  /* Table Container */
+  .table-container {
+      overflow-x: auto;
+  }
+
+  /* Styled Table */
+  .styled-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: "Poppins", sans-serif;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 12px;
+      overflow: hidden;
+  }
+
+  .styled-table thead tr {
+      background: linear-gradient(135deg, #007bff, #00c6ff);
+      color: white;
+      text-align: left;
+  }
+
+  .styled-table th, .styled-table td {
+      padding: 14px 18px;
+      border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .styled-table tbody tr {
+      background-color: rgba(255, 255, 255, 0.2);
+      transition: background 0.3s ease;
+  }
+
+  .styled-table tbody tr:hover {
+      background: rgba(0, 0, 0, 0.05);
+  }
+
+  .styled-table th {
+      font-weight: bold;
+      text-transform: uppercase;
+  }
+
+  .styled-table td {
+      color: #333;
+  }
+
+  /* Delete button styling */
+  .delete-button {
+      background: linear-gradient(135deg, #ff4b5c, #ff7577);
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      cursor: pointer;
+      border-radius: 6px;
+      font-size: 14px;
+      font-family: "Poppins", sans-serif;
+      transition: 0.3s;
+  }
+
+  .delete-button:hover {
+      background: linear-gradient(135deg, #ff3b4b, #ff5e60);
+      transform: scale(1.05);
+  }
+</style>

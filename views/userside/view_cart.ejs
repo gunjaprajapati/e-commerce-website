@@ -1,0 +1,145 @@
+<% layout("../layout/boilerplate.ejs") %>
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-5">
+      <img src="<%= product.imageUrl %>" alt="<%= product.name %>" class="img-fluid rounded shadow">
+    </div>
+    <div class="col-md-7">
+      <h2><%= product.name %></h2>
+      <p><%= product.description %></p>
+
+      <div class="mb-3">
+        <p class="text-danger fw-bold mb-1">
+          ₹<%= product.price ? product.price.toLocaleString("en-IN", { minimumFractionDigits: 2 }) : 'N/A' %>
+        </p>
+        <span class="badge ms-3 <%= product.stock > 0 ? 'bg-success' : 'bg-danger' %>">
+          <%= product.stock > 0 ? 'In Stock' : 'Out of Stock' %>
+        </span>
+      </div>
+
+      <p><strong>Size:</strong> <%= product.attributes?.Size || 'N/A' %></p>
+
+      <div class="mt-4">
+        <form method="post" action="/products/<%= product._id %>/cart/add_cart" class="d-inline">
+          <input type="hidden" name="productId" value="<%= product._id %>"> 
+          <div class="input-group mb-3" style="max-width: 150px; display: inline-flex; align-items: center;">
+            <button class="btn btn-outline-secondary" type="button" onclick="decreaseQuantity()">-</button>
+            <input type="number" id="quantity" name="quantity" value="1" min="1" class="form-control text-center">
+            <button class="btn btn-outline-secondary" type="button" onclick="increaseQuantity()">+</button>
+          </div>
+          <button class="btn btn-warning">Add to Cart</button>
+        </form>
+        
+
+        <form method="post" action="/products/<%= product._id %>/cart/add_cart" class="d-inline">
+          <button class="btn btn-danger">Buy Now</button>
+        </form>
+      </div>
+
+      <div class="mt-4">
+        <p><strong>SKU:</strong> <%= product.sku || 'N/A' %></p>
+        <p><strong>Category:</strong> <%= product.categories?.join(', ') || 'N/A' %></p>
+        <p><strong>Tags:</strong> <%= product.tags?.join(', ') || 'N/A' %></p>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Reviews Section -->
+  <div class="container my-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+  
+        <% if (curUser) { %>
+        <!-- Review Form -->
+        <div class="card shadow p-4 mb-4 rounded-4">
+          <h4 class="mb-3"> Review</h4>
+          <form action="/products/<%= product._id %>/reviews" method="POST" novalidate class="needs-validation">
+            <!-- Star Rating Input -->
+            <div class="mb-3">
+              <label for="rating" class="form-label">Rating</label>
+              <input type="range" min="1" max="5" id="rating" name="review[rating]" class="form-range" oninput="updateStarPreview(this.value)">
+              <!-- Live Star Preview -->
+              <div id="star-preview" class="mt-2">
+                <i class="bi bi-star"></i>
+                <i class="bi bi-star"></i>
+                <i class="bi bi-star"></i>
+                <i class="bi bi-star"></i>
+                <i class="bi bi-star"></i>
+              </div>
+            </div>
+  
+            <!-- Comment -->
+            <div class="mb-3">
+              <label for="comment" class="form-label">Comments</label>
+              <textarea name="review[Comment]" id="comment" cols="30" rows="4" class="form-control" required></textarea>
+              <div class="invalid-feedback">Please add some comments for review</div>
+            </div>
+  
+            <!-- Submit Button -->
+            <button class="btn btn-dark w-100">Submit Review</button>
+          </form>
+        </div>
+        <% } %>
+  
+        <!-- All Reviews -->
+        <hr class="mt-5">
+        <h5 class="mb-4"><strong>All Reviews</strong></h5>
+  
+        <div class="row g-4">
+          <% for (review of product.reviews) { %>
+          <div class="col-md-6">
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+              <div class="card-body">
+                <!-- Author -->
+                <h6 class="card-subtitle mb-2 text-muted">@<%= review.author?.username || "Anonymous" %></h6>
+  
+                <!-- Comment -->
+                <p class="card-text"><%= review.Comment %></p>
+  
+                <!-- Star Rating Only -->
+                <div class="card-text mb-2">
+                  <% for (let i = 0; i < review.rating; i++) { %>
+                    <i class="bi bi-star-fill text-warning"></i>
+                  <% } %>
+                  <% for (let i = review.rating; i < 5; i++) { %>
+                    <i class="bi bi-star text-secondary"></i>
+                  <% } %>
+                </div>
+  
+                <!-- Delete Review -->
+                <form method="POST" action="/products/<%= product._id %>/reviews/<%= review._id %>?_method=DELETE">
+                  <button class="btn btn-sm btn-outline-danger">Delete</button>
+                </form>
+              </div>
+            </div>
+          </div>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+
+<script>
+  function increaseQuantity() {
+    let qtyInput = document.getElementById("quantity");
+    qtyInput.value = parseInt(qtyInput.value) + 1;
+  }
+
+  function decreaseQuantity() {
+    let qtyInput = document.getElementById("quantity");
+    if (qtyInput.value > 1) {
+      qtyInput.value = parseInt(qtyInput.value) - 1;
+    }
+  }
+  function updateStarPreview(value) {
+    const preview = document.getElementById('star-preview');
+    preview.innerHTML = '';
+    for (let i = 1; i <= 5; i++) {
+      preview.innerHTML += `<i class="bi ${i <= value ? 'bi-star-fill text-warning' : 'bi-star'}"></i>`;
+    }
+  }
+</script>

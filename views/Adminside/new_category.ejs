@@ -1,0 +1,90 @@
+
+
+<div class="category-container">
+  <div class="category-card">
+      <h2>Create New Category</h2>
+
+      <form action="/category" method="POST">
+          <div class="input-group">
+              <label for="name">Category Name</label>
+              <input type="text" id="name" name="category[name]" placeholder="Enter category name" required>
+          </div>
+
+          <div class="input-group">
+              <label for="description">Description</label>
+              <textarea id="description" name="category[description]" placeholder="Enter category description"></textarea>
+          </div>
+
+          <button type="submit" class="btn">Create Category</button>
+      </form>
+  </div>
+</div>
+
+<style>
+  /* General Page Styling */
+  .category-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f4f4f4;
+  }
+
+  /* Card Design */
+  .category-card {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+      width: 400px;
+      text-align: center;
+  }
+
+  .category-card h2 {
+      margin-bottom: 20px;
+      color: #333;
+  }
+
+  /* Input Fields */
+  .input-group {
+      margin-bottom: 15px;
+      text-align: left;
+  }
+
+  .input-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 5px;
+  }
+
+  .input-group input,
+  .input-group textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 14px;
+  }
+
+  .input-group textarea {
+      resize: vertical;
+      min-height: 80px;
+  }
+
+  /* Submit Button */
+  .btn {
+      background: linear-gradient(45deg, #007bff, #00c6ff);
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 100%;
+      font-size: 16px;
+      font-weight: bold;
+  }
+
+  .btn:hover {
+      background: linear-gradient(45deg, #0056b3, #0099cc);
+  }
+</style>

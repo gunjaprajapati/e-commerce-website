@@ -1,0 +1,127 @@
+<% layout("../layout/boilerplate.ejs") %>
+
+<div class="container mt-5">
+  <div class="row">
+    <!-- Payment Options Section -->
+    <div class="col-lg-8">
+      <h2 class="fw-bold mb-4">Select Payment Method</h2>
+
+      <form id="paymentForm" method="POST" action="/cart/<%= userId %>/payment/submit">
+        <input type="hidden" name="userId" value="<%= userId %>">
+        <input type="hidden" name="amount" value="<%= orderTotal %>">
+
+        <div class="list-group mb-4">
+          <!-- Online Payment -->
+          <label class="list-group-item">
+            <input id="onlineOption" class="form-check-input me-2" type="radio" name="paymentMethod" value="Online" checked>
+            Online Payment (Razorpay)
+          </label>
+
+          <!-- Cash on Delivery -->
+          <label class="list-group-item">
+            <input class="form-check-input me-2" type="radio" name="paymentMethod" value="COD">
+            Cash on Delivery
+          </label>
+        </div>
+
+        <button type="submit" class="btn btn-warning w-100">Continue</button>
+      </form>
+    </div>
+
+    <!-- Price Details Section -->
+    <div class="col-lg-4">
+      <div class="p-4 rounded shadow-sm bg-white">
+        <h5>Price Details (<%= cart.length %> Items)</h5>
+        <p class="mt-3">Price: <strong>₹<%= isNaN(subtotal) ? '0.00' : subtotal.toFixed(2) %></strong></p>
+        <p>Delivery Charges: <strong class="text-success">FREE</strong></p>
+        <p>Platform Fee: <strong>₹<%= isNaN(platformFee) ? '0.00' : platformFee.toFixed(2) %></strong></p>
+        <hr>
+        <h4>Amount Payable: <strong>₹<%= isNaN(orderTotal) ? '0.00' : orderTotal.toFixed(2) %></strong></h4>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Razorpay Script -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+  const form = document.getElementById("paymentForm");
+  const onlineOption = document.getElementById("onlineOption");
+
+  form.addEventListener("submit", function (e) {
+    if (onlineOption.checked) {
+      e.preventDefault(); // stop normal submission
+      const orderTotalInRupees = parseFloat("<%= isNaN(orderTotal) ? 0 : orderTotal %>") || 0;
+
+// 2. Convert the Rupees amount to Paise (integer) as required by Razorpay.
+        const amountInPaise = Math.round(orderTotalInRupees * 100);
+
+      const options = {
+        key: "rzp_test_Ce3oNo2ZIPyfvx", // Replace with your test/live key
+        amount:amountInPaise, // 50000 paise = INR 500
+        currency: "INR",
+
+        name: "Raj International",
+        description: "Order Payment",
+        image: "https://example.com/logo.png",
+        handler: function (response) {
+          // Create hidden form & submit
+          const razorForm = document.createElement("form");
+          razorForm.method = "POST";
+          razorForm.action = "/cart/<%= userId %>/payment/submit";
+
+          const fields = {
+            userId: "<%= userId %>",
+            amount: "<%= orderTotal %>",
+            paymentMethod: "Online",
+            razorpayPaymentId: response.razorpay_payment_id
+          };
+
+          for (const key in fields) {
+            const input = document.createElement("input");
+            input.type = "hidden";
+            input.name = key;
+            input.value = fields[key];
+            razorForm.appendChild(input);
+          }
+
+          document.body.appendChild(razorForm);
+          razorForm.submit();
+        },
+        prefill: {
+          name: "Neel",
+          email: "neel@example.com",
+          contact: "9999999999"
+        },
+        theme: {
+          color: "#F37254"
+        }
+      };
+
+      const rzp = new Razorpay(options);
+      rzp.open();
+
+      rzp.on("payment.failed", function (response) {
+        alert("Payment failed!");
+        console.error(response.error);
+      });
+    }
+  });
+</script>
+
+<style>
+  .list-group-item {
+    padding: 30px;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+
+  .list-group-item:hover {
+    background-color: #f8f9fa;
+  }
+
+  .btn-warning:hover {
+    background-color: #ecb745;
+  }
+</style>

@@ -1,0 +1,55 @@
+
+
+<div class="container my-5">
+    <h2 class="text-center text-primary mb-4">All User Reviews</h2>
+
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card shadow border-0 rounded-4">
+                <div class="card-body p-4">
+                    <% if (reviews.length === 0) { %>
+                        <p class="text-center text-muted">No reviews found.</p>
+                    <% } else { %>
+                        <table class="table table-hover text-center align-middle">
+                            <thead class="table-primary">
+                                <tr>
+                                    <th>User</th>
+                                    <th>Email</th>
+                                    <th>Rating</th>
+                                    <th>Comment</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% reviews.forEach(review => { %>
+                                    <tr>
+                                        <td><%= review.author?.username || 'N/A' %></td>
+                                        <td><%= review.author?.email || 'N/A' %></td>
+                                        <td><%= review.rating %> ⭐</td>
+                                        <td><%= review.Comment %></td>
+                                        <td><%= new Date(review.createdAt).toLocaleString() %></td>
+                                    </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    <% } %>
+
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .table td, .table th {
+        vertical-align: middle;
+    }
+    .card:hover {
+        transform: scale(1.01);
+        transition: all 0.3s ease-in-out;
+    }
+    .btn:hover {
+        transform: scale(1.05);
+    }
+</style>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard</title>
+
+  <!-- FontAwesome -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js" crossorigin="anonymous"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body, html {
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .admin-container {
+      display: flex;
+      width: 100%;
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
+
+    .sidebar {
+      width: 250px;
+      background-color: #2c3e50;
+      color: white;
+      padding: 20px 0;
+      position: fixed;
+      height: 100%;
+      overflow-y: auto;
+    }
+
+    .sidebar h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 22px;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .sidebar ul li {
+      padding: 15px 20px;
+      transition: background 0.3s ease;
+    }
+
+    .sidebar ul li a {
+      color: white;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      font-size: 16px;
+    }
+
+    .sidebar ul li a i {
+      margin-right: 10px;
+    }
+
+    .sidebar ul li:hover,
+    .sidebar ul li.active {
+      background-color: #1abc9c;
+      cursor: pointer;
+    }
+
+    .main-content {
+      margin-left: 250px;
+      padding: 20px;
+      flex-grow: 1;
+      height: 100vh;
+      overflow-y: auto;
+      background-color: #f4f4f4;
+    }
+
+    #content-area {
+      background: white;
+      padding: 20px;
+      border-radius: 5px;
+      min-height: 300px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background: white;
+    }
+
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: center;
+    }
+
+    th {
+      background: #2c3e50;
+      color: white;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 200px;
+      }
+
+      .main-content {
+        margin-left: 200px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .sidebar {
+        width: 100px;
+        padding: 10px;
+      }
+
+      .main-content {
+        margin-left: 100px;
+      }
+
+      .sidebar h2 {
+        font-size: 14px;
+      }
+
+      .sidebar ul li a {
+        font-size: 12px;
+      }
+
+      .sidebar ul li a i {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="admin-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <h2>Admin Panel</h2>
+      <ul>
+        <li><a href="#" onclick="event.preventDefault(); loadContent(this, '/admin/sales')"><i class="fas fa-home"></i> Dashboard</a></li>
+        <li><a href="#" onclick="event.preventDefault(); loadContent(this, '/user/see_user')"><i class="fas fa-user-friends"></i> Users</a></li>
+        <li><a href="#" onclick="event.preventDefault(); loadContent(this, '/products')"><i class="fas fa-box-open"></i> Products</a></li>
+        <li><a href="#" onclick="event.preventDefault(); loadContent(this, '/admin/orders')"><i class="fas fa-shopping-cart"></i> Orders</a></li>
+        <li><a href="#" onclick="event.preventDefault(); loadContent(this, '/category')"><i class="fas fa-tags"></i> Categories</a></li>
+     
+        <li><a href="#" onclick="event.preventDefault(); loadContent(this, '/products/:id/reviews/admin_review')"><i class="fas fa-star"></i> Reviews</a></li>
+        <li><a href="/logout/logout_page"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+      </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <h2>Welcome, Admin 👋</h2>
+      <div id="content-area">
+        <p>Manage your store with ease, control your users, track orders, and keep your inventory up to date. Everything you need is just a click away.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function loadContent(linkElement, url) {
+      fetch(url)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.text();
+        })
+        .then(data => {
+          document.getElementById('content-area').innerHTML = data;
+
+          // Highlight active link
+          const allLinks = document.querySelectorAll('.sidebar ul li');
+          allLinks.forEach(li => li.classList.remove('active'));
+          linkElement.parentElement.classList.add('active');
+
+          // If sales page, fetch additional stats
+          if (url.includes('/admin/sales')) {
+            fetchSalesData();
+          }
+        })
+        .catch(error => {
+          console.error('Error loading content:', error);
+          document.getElementById('content-area').innerHTML = "<p>Failed to load content.</p>";
+        });
+    }
+
+    function fetchSalesData() {
+      fetch('/admin/sales-data')
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById('totalOrders').textContent = data.totalOrders || '0';
+          document.getElementById('confirmedOrders').textContent = data.confirmedOrders || '0';
+          document.getElementById('pendingOrders').textContent = data.pendingOrders || '0';
+          document.getElementById('cancelledOrders').textContent = data.cancelledOrders || '0';
+        })
+        .catch(error => {
+          console.error('Error fetching sales data:', error);
+        });
+    }
+  </script>
+</body>
+</html>

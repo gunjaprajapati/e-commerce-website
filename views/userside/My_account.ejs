@@ -1,0 +1,83 @@
+<% layout("../layout/boilerplate.ejs") %>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+
+    h1 {
+        text-align: center;
+        margin: 40px 0 25px;
+        font-size: 32px;
+        color: #2c3e50;
+    }
+
+    .sales-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 25px;
+        padding: 0 20px 50px;
+    }
+
+    .sales-box {
+        width: 260px;
+        padding: 30px 20px;
+        border-radius: 18px;
+        text-align: center;
+        text-decoration: none;
+        color: white;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    }
+
+    .sales-box:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 12px 25px rgba(0,0,0,0.3);
+    }
+
+    .sales-box i {
+        font-size: 44px;
+        margin-bottom: 12px;
+    }
+
+    .sales-box h3 {
+        font-size: 20px;
+        margin-top: 10px;
+    }
+
+    .total-orders {
+        background: linear-gradient(135deg, #3498db, #2980b9);
+    }
+
+    .confirmed-orders {
+        background: linear-gradient(135deg, #2ecc71, #27ae60);
+    }
+
+    .pending-orders {
+        background: linear-gradient(135deg, #f39c12, #e67e22);
+    }
+</style>
+
+<h1>My Account</h1>
+
+<div class="sales-container">
+    <a href="/account/orders" class="sales-box total-orders">
+        <i class="fas fa-shopping-bag"></i>
+        <h3>Total Orders</h3>
+    </a>
+
+    <a href="/account/user_address" class="sales-box confirmed-orders">
+        <i class="fas fa-map-marker-alt"></i>
+        <h3>My Address</h3>
+    </a>
+
+    <a href="/account/account_details" class="sales-box pending-orders">
+        <i class="fas fa-user-circle"></i>
+        <h3>My Profile</h3>
+    </a>
+</div>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home | My E-Commerce</title>
+    <link rel="stylesheet" href="/css/style.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    
+</head>
+<body>
+
+    <!-- Include Navbar -->
+    <%- include("../includes/navbar.ejs") %>
+
+    <main class="container mt-4">
+
+        <!-- First Row (Product Images) -->
+        <div class="row mb-4">
+            <% firstRowImages.forEach(product => { %>
+                <div class="col-md-3 col-6 mb-3">
+                    <a href="/product/<%= product.id %>">
+                        <img src="<%= product.image %>" class="img-fluid rounded" alt="Product">
+                    </a>
+                </div>
+            <% }) %>
+        </div>
+
+        <!-- Second Row (Brand Logos) -->
+        <div class="row justify-content-center mb-4">
+            <% secondRowLogos.forEach(logo => { %>
+                <div class="col-4 col-md-2 text-center">
+                    <img src="<%= logo.image %>" class="img-fluid rounded" alt="Brand Logo">
+                </div>
+            <% }) %>
+        </div>
+
+        <!-- Third Row (More Products) -->
+        <div class="row mb-4">
+            <% thirdRowImages.forEach(product => { %>
+                <div class="col-md-3 col-6 mb-3">
+                    <a href="/product/<%= product.id %>">
+                        <img src="<%= product.image %>" class="img-fluid rounded" alt="Product">
+                    </a>
+                </div>
+            <% }) %>
+        </div>
+
+        <!-- Fourth Row (Promotional Banners) -->
+        <div class="row mb-4">
+            <% fourthRowBanners.forEach(banner => { %>
+                <div class="col-md-4 col-12 mb-3">
+                    <img src="<%= banner.image %>" class="img-fluid rounded" alt="<%= banner.alt %>">
+                </div>
+            <% }) %>
+        </div>
+
+        <section class="featured-products mt-5">
+            <h2 class="text-center mb-4">Featured Products</h2>
+            <div class="row">
+                <% featuredProducts.forEach(product => { %>
+                    <div class="col-md-3 col-6 mb-4">
+                        <div class="card">
+                            <a href="/products/<%= product._id %>/cart/add_cart">
+                                <img src="<%= product.imageUrl %>" class="card-img-top" alt="<%= product.name %>">
+                            </a>
+                            <div class="card-body text-center">
+                                <h6 class="card-title"><%= product.name %></h6>
+                                <p class="card-text">₹<%= product.price %></p>
+                            </div>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        </section>
+
+        
+        
+
+    
+    
+
+    </main>
+
+    <%- include('partials/footer') %>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    
+</body>
+</html>

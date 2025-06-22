@@ -1,0 +1,45 @@
+<% layout("../layout/boilerplate.ejs") %>
+
+<div class="d-flex justify-content-center align-items-start vh-100 pt-5">
+    <div class="card login-card p-4 shadow-lg text-center">
+        <h2 class="mb-4">Login</h2>
+        <form action="/login/login_form" method="POST" class="needs-validation" novalidate>
+            <div class="mb-3 text-start">
+                <label for="username" class="form-label">Username</label>
+                <input name="username" id="username" type="text" class="form-control" required/>
+            </div>
+            <div class="mb-3 text-start">
+                <label for="password" class="form-label">Password</label>
+                <input name="password" id="password" type="password" class="form-control" required/>
+            </div>
+            <button class="btn btn-custom w-100">Login</button>
+        </form>
+    </div>
+    
+</div>
+
+<style>
+    body {
+        background: #f4f4f4; /* Simple and clean light gray background */
+        font-family: 'Poppins', sans-serif;
+    }
+    .login-card {
+        background: white;
+        border-radius: 12px;
+        width: 350px;
+        padding: 20px;
+    }
+    .btn-custom {
+        background-color: #00203F;
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: 0.3s;
+    }
+    .btn-custom:hover {
+        background-color: #004080;
+        color: white;
+    }
+</style>

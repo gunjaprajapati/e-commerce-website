@@ -1,0 +1,118 @@
+<% layout("../layout/boilerplate.ejs") %>
+
+<style>
+    .order-history-wrapper {
+        font-family: 'Poppins', sans-serif;
+       
+        padding: 40px 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+    }
+
+    .order-container {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 100%;
+        max-width: 900px;
+    }
+
+    .order-card {
+        display: flex;
+        background: #fff;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        gap: 20px;
+        align-items: center;
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .order-card:hover {
+        transform: translateY(-4px);
+    }
+
+    .product-image {
+        width: 100px;
+        height: 100px;
+        object-fit: contain;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        flex-shrink: 0;
+        background-color: #fff;
+    }
+
+    .product-details {
+        flex: 1;
+        text-align: left;
+    }
+
+    .product-details h2 {
+        margin: 0;
+        font-size: 18px;
+        color: #111;
+        line-height: 1.4;
+    }
+
+    .product-details p {
+        margin: 6px 0;
+        color: #555;
+        font-size: 14px;
+    }
+
+    .order-id {
+        font-size: 13px;
+        color: #999;
+    }
+
+    .price {
+        font-weight: 600;
+        color: #e67e22;
+        font-size: 16px;
+    }
+
+    @media (max-width: 600px) {
+        .order-card {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .product-image {
+            width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+    }
+</style>
+
+<div class="order-history-wrapper">
+    <h1>Order History</h1>
+    <% if (orders.length > 0) { %>
+        <div class="order-container">
+            <% orders.forEach(order => { %>
+                <% order.products.forEach(product => { %>
+                    <div class="order-card">
+                        <img class="product-image" src="<%= product.productId && product.productId.imageUrl ? product.productId.imageUrl : '/default-image.jpg' %>" alt="Product Image">
+                        <div class="product-details">
+                            <p class="order-id">Order ID: <%= order._id %></p>
+                            <h2><%= product.productId ? product.productId.name : 'N/A' %></h2>
+                            <p>Quantity: <%= product.quantity %></p>
+                           
+                            <p class="price">Price: $<%= product.productId ? product.productId.price.toFixed(2) : 'N/A' %></p>
+                            <p>Order Date: <%= new Date(order.purchaseDate).toLocaleDateString('en-US', {
+                                weekday: 'long',
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric'
+                            }) %></p>
+                        </div>
+                    </div>
+                <% }); %>
+            <% }); %>
+        </div>
+    <% } else { %>
+        <p>No orders found.</p>
+    <% } %>
+</div>

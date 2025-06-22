@@ -1,0 +1,72 @@
+<% layout("../layout/boilerplate.ejs") %>
+
+<div class="container py-5 d-flex justify-content-center align-items-center">
+    <div class="profile-card p-4 shadow-lg">
+        <div class="profile-header text-center text-white mb-4">
+            <h2 class="mb-0">My Profile</h2>
+        </div>
+
+        <div class="text-center">
+            <h3 class="username mb-3"><%= users[0].username %></h3>
+
+            <p class="mb-2">
+                <strong>Email:</strong> <span class="text-muted"><%= users[0].email %></span>
+            </p>
+
+            <p class="mb-4">
+                <strong>Role:</strong> 
+                <span class="badge bg-<%= users[0].role === 'admin' ? 'danger' : 'secondary' %> px-3 py-1 text-uppercase">
+                    <%= users[0].role %>
+                </span>
+            </p>
+
+            <a href="/account/My_account" class="btn btn-primary px-4 py-2">Back to Home</a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .profile-card {
+        max-width: 500px;
+        width: 100%;
+        border-radius: 16px;
+        background: #fff;
+        animation: fadeInUp 0.6s ease;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .profile-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .profile-header {
+        background: linear-gradient(135deg, #ccb445 0%, #eec632 100%);
+        padding: 25px 0;
+        border-radius: 12px 12px 0 0;
+    }
+
+    .username {
+        font-size: 1.8rem;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .btn-primary {
+        background-color: #eec632;
+        border-radius: 25px;
+        font-weight: 500;
+        box-shadow: 0 4px 10px rgba(236, 204, 96, 0.3);
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>

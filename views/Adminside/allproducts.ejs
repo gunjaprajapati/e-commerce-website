@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Product Management</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f0f2f5;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      background: #f8f9fa;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.05);
+    }
+
+    h3 {
+      text-align: center;
+      font-size: 28px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 30px;
+    }
+
+    .btn-create {
+      background: linear-gradient(135deg, #00c6ff, #0072ff);
+      color: white;
+      font-weight: bold;
+      padding: 10px 20px;
+      border-radius: 6px;
+      display: block;
+      width: fit-content;
+      margin-left: auto;
+      text-decoration: none;
+      transition: 0.3s ease-in-out;
+    }
+
+    .btn-create:hover {
+      background: linear-gradient(135deg, #0072ff, #00c6ff);
+      transform: scale(1.05);
+    }
+
+    .table {
+      width: 100%;
+      margin-top: 20px;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .table thead {
+      background: #0072ff;
+      color: white;
+    }
+
+    .table th, .table td {
+      padding: 12px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .table tbody tr:hover {
+      background: #f1f9ff;
+    }
+
+    .table img {
+      height: 70px;
+      width: auto;
+      border-radius: 8px;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .table img:hover {
+      transform: scale(1.1);
+    }
+
+    .btn {
+      padding: 8px 12px;
+      border-radius: 5px;
+      font-size: 14px;
+      transition: all 0.3s ease-in-out;
+      text-decoration: none;
+      color: white;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-view {
+      background: #28a745;
+    }
+    .btn-view:hover {
+      background: #218838;
+    }
+
+    .btn-edit {
+      background: #ffc107;
+      color: #000;
+    }
+    .btn-edit:hover {
+      background: #e0a800;
+    }
+
+    .btn-delete {
+      background: #dc3545;
+    }
+    .btn-delete:hover {
+      background: #c82333;
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .page-link {
+      text-decoration: none;
+      padding: 8px 12px;
+      background: #0072ff;
+      color: white;
+      border-radius: 5px;
+      margin: 0 5px;
+    }
+
+    .page-link:hover {
+      background: #0056b3;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px;
+      }
+
+      .table th, .table td {
+        padding: 10px 6px;
+      }
+
+      .btn-create {
+        width: 100%;
+        text-align: center;
+        margin: 10px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h3>📦 Product Management</h3>
+
+    <a href="/products/new" class="btn-create">➕ Create Product</a>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Image</th>
+          <th>Product</th>
+          <th>Price</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for (let product of allproducts) { %>
+          <tr>
+            <td><img src="<%= product?.imageUrl %>" alt="<%= product?.name %>"></td>
+            <td><%= product?.name ?? "N/A" %></td>
+            <% let formattedPrice; %>
+            <% if (product?.price) { %>
+              <% formattedPrice = product.price.toLocaleString("en-IN"); %>
+            <% } else { %>
+              <% formattedPrice = "N/A"; %>
+            <% } %>
+            <td>&#8377;<%= formattedPrice %></td>
+            <td>
+              <div style="display: flex; gap: 5px; justify-content: center;">
+                <a href="/products/<%= product?._id %>" class="btn btn-view">👁 View</a>
+                <a href="/products/<%= product?._id %>/edit" class="btn btn-edit">✏ Edit</a>
+                <form action="/products/<%= product?._id %>?_method=DELETE" method="POST">
+                  <button class="btn btn-delete" type="submit">🗑 Delete</button>
+                </form>
+              </div>
+            </td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+
+    <div class="pagination">
+      <a class="page-link" href="#" aria-label="Previous">«</a>
+      <a class="page-link" href="#">1</a>
+      <a class="page-link" href="#">2</a>
+      <a class="page-link" href="#">3</a>
+      <a class="page-link" href="#" aria-label="Next">»</a>
+    </div>
+  </div>
+</body>
+</html>
