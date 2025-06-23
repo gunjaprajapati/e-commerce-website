@@ -70,7 +70,7 @@ const sessionOptions =  {
     resave: false,
     saveUninitialized: true,
     cookie: {
-        express: Date.now() + 7 * 24 * 60 * 60 * 1000,
+      expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // Set expiration date
         maxAge: 7 * 24 * 60 * 60 * 1000,
         httpOnly: true,
     }
