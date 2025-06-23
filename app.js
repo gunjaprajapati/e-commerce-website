@@ -39,7 +39,7 @@ const myaccountRouter = require ("./router/userside/My_account.js");
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
 
 //(3.1) creating Wonderlust database
-const mongo_url = "mongodb+srv://ecom_user:yourpassword123@cluster0.ikum9.mongodb.net/ecommerce?retryWrites=true&w=majority&appName=Cluster0";
+const mongo_url = "mongodb+srv://ecom_user:gunja123@cluster0.ikum9.mongodb.net/ecommerce?retryWrites=true&w=majority&appName=Cluster0";
 
 //(3.2) calling main function
 main()

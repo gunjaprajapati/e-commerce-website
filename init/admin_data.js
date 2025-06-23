@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Admin = require("../models/admin.js"); // Ensure correct path
 
-const mongo_url = "mongodb+srv://ecom_user:yourpassword123@cluster0.ikum9.mongodb.net/ecommerce?retryWrites=true&w=majority&appName=Cluster0"; // Database URL
+const mongo_url = "mongodb+srv://ecom_user:gunja123@cluster0.ikum9.mongodb.net/ecommerce?retryWrites=true&w=majority&appName=Cluster0"; // Database URL
 
 // Connect to MongoDB
 main()
